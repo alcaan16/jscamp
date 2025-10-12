@@ -34,8 +34,32 @@ jobsListingSection.addEventListener("click", function (event) {
   }
 });
 
-const filter = document.querySelector("#filter-technology");
+const filterTechnology = document.querySelector("#filter-technology");
+const filterLocation = document.querySelector("#location");
+const filterExperience = document.querySelector("#experience-level");
+const jobListings = document.querySelectorAll(".job-listing-card");
 
-filter.addEventListener("change", function () {
-  console.log(filter.value);
-});
+function filterJobs() {
+  const selectedTech = filterTechnology.value.toLowerCase();
+  const selectedLocation = filterLocation.value.toLowerCase();
+  const selectedExperience = filterExperience.value.toLowerCase();
+
+  jobListings.forEach((job) => {
+    const jobText = job.textContent.toLowerCase();
+    const matchesTech = selectedTech === "" || jobText.includes(selectedTech);
+    const matchesLocation =
+      selectedLocation === "" || jobText.includes(selectedLocation);
+    const matchesExperience =
+      selectedExperience === "" || jobText.includes(selectedExperience);
+
+    if (matchesTech && matchesLocation && matchesExperience) {
+      job.style.display = "";
+    } else {
+      job.style.display = "none";
+    }
+  });
+}
+
+filterTechnology.addEventListener("change", filterJobs);
+filterLocation.addEventListener("change", filterJobs);
+filterExperience.addEventListener("change", filterJobs);
